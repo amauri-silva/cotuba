@@ -48,43 +48,6 @@ public class Main {
 
 		try {
 
-			String nomeDoDiretorioDosMD = cmd.getOptionValue("dir");
-
-			if (nomeDoDiretorioDosMD != null) {
-				diretorioDosMD = Paths.get(nomeDoDiretorioDosMD);
-				if (!Files.isDirectory(diretorioDosMD)) {
-					throw new RuntimeException(nomeDoDiretorioDosMD + " não é um diretório.");
-				}
-			} else {
-				Path diretorioAtual = Paths.get("");
-				diretorioDosMD = diretorioAtual;
-			}
-
-			String nomeDoFormatoDoEbook = cmd.getOptionValue("format");
-
-			if (nomeDoFormatoDoEbook != null) {
-				try {
-					formato = nomeDoFormatoDoEbook.toLowerCase();
-				} catch (IllegalArgumentException ex) {
-					throw new RuntimeException("O formato " + nomeDoFormatoDoEbook + " não é suportado.", ex);
-
-				}
-			} else {
-				formato = "pdf";
-			}
-
-			String nomeDoArquivoDeSaidaDoEbook = cmd.getOptionValue("output");
-			if (nomeDoArquivoDeSaidaDoEbook != null) {
-				arquivoDeSaida = Paths.get(nomeDoArquivoDeSaidaDoEbook);
-				if (Files.exists(arquivoDeSaida) && Files.isDirectory(arquivoDeSaida)) {
-					throw new RuntimeException(nomeDoArquivoDeSaidaDoEbook + " é um diretório.");
-				}
-			} else {
-				arquivoDeSaida = Paths.get("book." + formato.toLowerCase());
-			}
-
-			modoVerboso = cmd.hasOption("verbose");
-			
 			if ("pdf".equals(formato)) {
 				try {
 					PdfWriter writer = new PdfWriter(Files.newOutputStream(arquivoDeSaida));
