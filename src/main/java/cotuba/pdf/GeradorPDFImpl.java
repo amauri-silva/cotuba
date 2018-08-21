@@ -17,7 +17,7 @@ import com.itextpdf.layout.property.AreaBreakType;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 
-public class GeradorPDF {
+public class GeradorPDFImpl {
 
 	public void gera(Ebook ebook) {
 		Path arquivoDeSaida = ebook.getArquivoDeSaida();
