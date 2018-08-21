@@ -1,7 +1,6 @@
 package cotuba;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 import com.itextpdf.html2pdf.HtmlConverter;
@@ -15,7 +14,7 @@ import com.itextpdf.layout.property.AreaBreakType;
 
 public class GeradorPDF {
 
-	public void gera(Path diretorioDosMD, Path arquivoDeSaida) {
+	public void gera(Ebook ebook) {
 
 		try {
 			PdfWriter writer = new PdfWriter(Files.newOutputStream(arquivoDeSaida));
