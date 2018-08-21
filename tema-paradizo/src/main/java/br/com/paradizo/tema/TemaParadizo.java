@@ -5,7 +5,7 @@ import cotuba.plugin.Plugin;
 public class TemaParadizo implements Plugin {
 
 	public String cssDoTema() {
-		return null;
+		return	FileUtils.getResourceContents("/tema.css");
 	}
 
 }
