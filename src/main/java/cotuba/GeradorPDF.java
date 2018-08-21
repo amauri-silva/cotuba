@@ -3,6 +3,8 @@ package cotuba;
 import java.nio.file.Files;
 import java.util.List;
 
+import java.nio.file.Path;
+
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -15,19 +17,26 @@ import com.itextpdf.layout.property.AreaBreakType;
 public class GeradorPDF {
 
 	public void gera(Ebook ebook) {
-
+		Path arquivoDeSaida = ebook.getArquivoDeSaida();
+		
 		try {
 			PdfWriter writer = new PdfWriter(Files.newOutputStream(arquivoDeSaida));
 			PdfDocument pdf = new PdfDocument(writer);
 			Document pdfDocument = new Document(pdf);
+			
+			for (Capitulo capitulo : ebook.getCapitulos()) {
 
-			List<IElement> convertToElements = HtmlConverter.convertToElements(html);
-			for (IElement element : convertToElements) {
-				pdfDocument.add((IBlockElement) element);
+				String html = capitulo.getConteudoHTML();
+				
+				List<IElement> convertToElements = HtmlConverter.convertToElements(html);
+				for (IElement element : convertToElements) {
+					pdfDocument.add((IBlockElement) element);
+				}
+				// TODO: não adicionar página depois do último
+				// capítulo
+				pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
 			}
-			// TODO: não adicionar página depois do último
-			// capítulo
-			pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
 			pdfDocument.close();
 		} catch (Exception ex) {
