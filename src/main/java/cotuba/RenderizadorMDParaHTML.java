@@ -7,6 +7,16 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.util.stream.Stream;
 
+import org.commonmark.node.AbstractVisitor;
+import org.commonmark.node.Heading;
+import org.commonmark.node.Node;
+import org.commonmark.node.Text;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
+import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.service.MediatypeService;
+
 public class RenderizadorMDParaHTML {
 
 	public void renderiza(Path diretorioDosMD) {
@@ -18,6 +28,41 @@ public class RenderizadorMDParaHTML {
 			throw new RuntimeException("Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(),
 					ex);
 		}
+		
+		arquivosMD.forEach(arquivoMD -> {
+			Parser parser = Parser.builder().build();
+			Node document = null;
+			try {
+				document = parser.parseReader(Files.newBufferedReader(arquivoMD));
+				document.accept(new AbstractVisitor() {
+					public void visit(Heading heading) {
+						if (heading.getLevel() == 1) {
+							// capítulo
+							String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
+							// TODO: usar título do capítulo
+						} else if (heading.getLevel() == 2) {
+							// seção
+						} else if (heading.getLevel() == 3) {
+							// título
+						}
+					}
+
+				});
+			} catch (Exception ex) {
+				throw new RuntimeException("Error parsing file " + arquivoMD, ex);
+			}
+
+			try {
+				HtmlRenderer renderer = HtmlRenderer.builder().build();
+				String html = renderer.render(document);
+
+				// PDF ou EPUB aqui?
+				
+			} catch (Exception ex) {
+				throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
+			}
+		});
+
 	}
 
 }
