@@ -12,7 +12,9 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-public class LeitorOpcoesCLI {
+import cotuba.application.ParametrosCotuba;
+
+public class LeitorOpcoesCLI implements ParametrosCotuba {
 	
 	private Path diretorioDosMD;
     private String formato;
@@ -91,14 +93,17 @@ public class LeitorOpcoesCLI {
 		modoVerboso = cmd.hasOption("verbose");
     }
 
+	@Override
 	public Path getDiretorioDosMD() {
 		return diretorioDosMD;
 	}
 
+	@Override
 	public String getFormato() {
 		return formato;
 	}
 
+	@Override
 	public Path getArquivoDeSaida() {
 		return arquivoDeSaida;
 	}
