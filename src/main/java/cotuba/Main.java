@@ -41,10 +41,12 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Path diretorioDosMD;
-		String formato;
-		Path arquivoDeSaida;
-		boolean modoVerboso = false;
+		LeitorOpcoesCLI opcoesCLI = new LeitorOpcoesCLI(args);
+
+		Path diretorioDosMD = opcoesCLI.getDiretorioDosMD();
+		String formato = opcoesCLI.getFormato();
+		Path arquivoDeSaida = opcoesCLI.getArquivoDeSaida();
+		boolean modoVerboso = opcoesCLI.isModoVerboso();
 
 		try {
 
@@ -94,7 +96,8 @@ public class Main {
 							for (IElement element : convertToElements) {
 								pdfDocument.add((IBlockElement) element);
 							}
-							// TODO: não adicionar página depois do último capítulo
+							// TODO: não adicionar página depois do último
+							// capítulo
 							pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
 						} catch (Exception ex) {
