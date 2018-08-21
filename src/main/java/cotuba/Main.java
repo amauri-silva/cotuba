@@ -44,6 +44,8 @@ public class Main {
 
 			if ("pdf".equals(formato)) {
 				
+				GeradorPDF	geradorPDF	=	new	GeradorPDF();
+				geradorPDF.gera(diretorioDosMD,	arquivoDeSaida);
 
 			} else if ("epub".equals(formato)) {
 				Book epub = new Book();
