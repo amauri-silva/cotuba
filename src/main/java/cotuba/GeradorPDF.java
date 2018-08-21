@@ -33,15 +33,6 @@ public class GeradorPDF {
 			PdfDocument pdf = new PdfDocument(writer);
 			Document pdfDocument = new Document(pdf);
 
-			PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
-			Stream<Path> arquivosMD = Stream.empty();
-			try {
-				arquivosMD = Files.list(diretorioDosMD).filter(arquivo -> matcher.matches(arquivo)).sorted();
-			} catch (IOException ex) {
-				throw new RuntimeException(
-						"Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(), ex);
-			}
-
 			arquivosMD.forEach(arquivoMD -> {
 				Parser parser = Parser.builder().build();
 				Node document = null;
