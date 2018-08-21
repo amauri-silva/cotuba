@@ -8,7 +8,6 @@ import cotuba.domain.Ebook;
 import cotuba.epub.GeradorEPUB;
 import cotuba.epub.GeradorEPUBImpl;
 import cotuba.md.RenderizadorMDParaHTML;
-import cotuba.md.RenderizadorMDParaHTMLImpl;
 import cotuba.pdf.GeradorPDF;
 import cotuba.pdf.GeradorPDFImpl;
 
@@ -16,8 +15,8 @@ public class Cotuba {
 
     public void executa(String formato, Path diretorioDosMD, Path arquivoDeSaida) {
 
-		RenderizadorMDParaHTML renderizador = new RenderizadorMDParaHTMLImpl(); 
-		List<Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
+    	RenderizadorMDParaHTML renderizador = RenderizadorMDParaHTML.cria();
+    	List<Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
 		
 		Ebook ebook = new Ebook(formato, arquivoDeSaida);
 		ebook.adicionaCapitulos(capitulos);
