@@ -66,6 +66,12 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.11.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -102,9 +108,9 @@
 			<url>https://repo.itextsupport.com/releases</url>
 		</repository>
 		<repository>
-		    <id>mvn-repo</id>
-		    <url>https://rawgit.com/alexandreaquiles/mvn-repo/master</url>
-    	</repository>
+			<id>mvn-repo</id>
+			<url>https://rawgit.com/alexandreaquiles/mvn-repo/master</url>
+		</repository>
 	</repositories>
 
 </project>
