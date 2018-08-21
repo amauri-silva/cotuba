@@ -61,7 +61,8 @@ public class RenderizadorMDParaHTML {
 				HtmlRenderer renderer = HtmlRenderer.builder().build();
 				String html = renderer.render(document);
 
-				// PDF ou EPUB aqui?
+				capitulo.setConteudoHTML(html);
+				capitulos.add(capitulo);
 				
 			} catch (Exception ex) {
 				throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
