@@ -6,22 +6,22 @@ package cotuba.domain;
 
   public class Ebook {
 
-    private String formato;
+    private FormatoEbook formato;
 
     private Path arquivoDeSaida;
 
     private List<Capitulo> capitulos = new ArrayList<>();
 
-    public Ebook(String formato, Path arquivoDeSaida) {
+    public Ebook(FormatoEbook formato, Path arquivoDeSaida) {
       this.formato = formato;
       this.arquivoDeSaida = arquivoDeSaida;
     }
 
-    public String getFormato() {
+    public FormatoEbook getFormato() {
 		return formato;
 	}
 
-	public void setFormato(String formato) {
+	public void setFormato(FormatoEbook formato) {
 		this.formato = formato;
 	}
 
