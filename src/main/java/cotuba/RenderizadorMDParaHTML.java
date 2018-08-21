@@ -31,6 +31,8 @@ public class RenderizadorMDParaHTML {
 		}
 		
 		arquivosMD.forEach(arquivoMD -> {
+			Capitulo capitulo = new Capitulo();
+
 			Parser parser = Parser.builder().build();
 			Node document = null;
 			try {
