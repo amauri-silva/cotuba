@@ -1,6 +1,7 @@
 package cotuba;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class Main {
 
@@ -13,6 +14,9 @@ public class Main {
 		Path arquivoDeSaida = opcoesCLI.getArquivoDeSaida();
 		boolean modoVerboso = opcoesCLI.isModoVerboso();
 
+		RenderizadorMDParaHTML renderizador = new RenderizadorMDParaHTML(); 
+		List<Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
+		
 		try {
 
 			if ("pdf".equals(formato)) {
