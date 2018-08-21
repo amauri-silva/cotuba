@@ -10,6 +10,6 @@ public interface RenderizadorMDParaHTML {
 	List<Capitulo> renderiza(Path diretorioDosMD);
 
 	public static RenderizadorMDParaHTML cria() {
-		return new RenderizadorMDParaHTMLImpl();
+		return new RenderizadorMDParaHTMLComCommonMark();
 	}
 }
