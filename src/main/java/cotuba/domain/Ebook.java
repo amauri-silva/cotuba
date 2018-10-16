@@ -4,13 +4,14 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class Ebook {
-	private String formato;
+	private FormatoEbook formato;
 	private List<Capitulo> capitulos;
 	private Path ArquivoDeSaida;
-	public String getFormato() {
+	
+	public FormatoEbook getFormato() {
 		return formato;
 	}
-	public void setFormato(String formato) {
+	public void setFormato(FormatoEbook formato) {
 		this.formato = formato;
 	}
 	public List<Capitulo> getCapitulos() {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import cotuba.domain.Capitulo;
 import cotuba.md.RenderizadorMDParaHTMLComCommonMark;
-import cotuba.pdf.GeradorPDFComIText;
+import cotuba.pdf.GeradorPDF;
 
 public interface RenderizadorMDParaHTML {
 	List<Capitulo> renderiza(Path diretorioDosMD);
