@@ -18,6 +18,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 import cotuba.application.RenderizadorMDParaHTML;
 import cotuba.domain.Capitulo;
+import cotuba.tema.AplicadorTema;
 
 public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHTML {
 
@@ -53,6 +54,10 @@ public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHT
 				HtmlRenderer renderer = HtmlRenderer.builder().build();
 				String html = renderer.render(document);
 				capitulo.setConteudoHTML(html);
+				
+				AplicadorTema tema = new AplicadorTema();
+				tema.aplica(capitulo);
+				
 				capitulos.add(capitulo);
 			});
 		} catch (IOException ex) {
