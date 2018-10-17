@@ -1,29 +1,29 @@
 package cotuba.domain;
 
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 
-public class Ebook implements cotuba.plugin.Ebook {
-	private FormatoEbook formato;
-	private List<Capitulo> capitulos;
-	private Path ArquivoDeSaida;
-	
+public final class Ebook {
+	private final FormatoEbook formato;
+	private final List<Capitulo> capitulos;
+	private final Path arquivoDeSaida;
+
+	public Ebook(FormatoEbook formato, List<Capitulo> capitulos, Path arquivoDeSaida) {
+		this.formato = formato;
+		this.capitulos = Collections.unmodifiableList(capitulos);
+		this.arquivoDeSaida = arquivoDeSaida;
+	}
+
 	public FormatoEbook getFormato() {
 		return formato;
 	}
-	public void setFormato(FormatoEbook formato) {
-		this.formato = formato;
-	}
+
 	public List<Capitulo> getCapitulos() {
-		return capitulos;
+		return Collections.unmodifiableList(capitulos);
 	}
-	public void setCapitulos(List<Capitulo> capitulos) {
-		this.capitulos = capitulos;
-	}
+
 	public Path getArquivoDeSaida() {
-		return ArquivoDeSaida;
-	}
-	public void setArquivoDeSaida(Path arquivoDeSaida) {
-		ArquivoDeSaida = arquivoDeSaida;
+		return arquivoDeSaida;
 	}
 }

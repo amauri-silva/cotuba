@@ -10,13 +10,12 @@ import cotuba.plugin.Tema;
 
 public class AplicadorTema {
 
-	public void aplica(Capitulo capitulo) {
-		String html = capitulo.getConteudoHTML();
+	public String aplica(String html) {
 		Document document = Jsoup.parse(html);
 		List<String> listaDeTemas = Tema.listaDeTemas();
 		for (String css : listaDeTemas) {
 			document.select("head").append("<style>" + css + "</style>");
 		}
-		capitulo.setConteudoHTML(document.html());
+		return document.html();
 	}
 }

@@ -17,6 +17,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import cotuba.application.RenderizadorMDParaHTML;
+import cotuba.builder.CapituloBuilder;
 import cotuba.domain.Capitulo;
 import cotuba.tema.AplicadorTema;
 
@@ -29,7 +30,7 @@ public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHT
 			arquivosMD.filter(matcher::matches).sorted().forEach(arquivoMD -> {
 				Parser parser = Parser.builder().build();
 				Node document = null;
-				Capitulo capitulo = new Capitulo();
+				CapituloBuilder capituloBuilder = new CapituloBuilder();
 				try {
 					document = parser.parseReader(Files.newBufferedReader(arquivoMD));
 					document.accept(new AbstractVisitor() {
@@ -38,7 +39,7 @@ public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHT
 							if (heading.getLevel() == 1) {
 								// capítulo
 								String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
-								capitulo.setTitulo(tituloDoCapitulo);
+								capituloBuilder.comTitulo(tituloDoCapitulo);
 							} else if (heading.getLevel() == 2) {
 								// seção
 							} else if (heading.getLevel() == 3) {
@@ -53,11 +54,12 @@ public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHT
 
 				HtmlRenderer renderer = HtmlRenderer.builder().build();
 				String html = renderer.render(document);
-				capitulo.setConteudoHTML(html);
 				
 				AplicadorTema tema = new AplicadorTema();
-				tema.aplica(capitulo);
+				String htmlComTemas = tema.aplica(html);
 				
+				capituloBuilder.comConteudoHTML(htmlComTemas);
+				Capitulo capitulo = capituloBuilder.constroi();
 				capitulos.add(capitulo);
 			});
 		} catch (IOException ex) {
