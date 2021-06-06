@@ -57,6 +57,7 @@ public class Main {
 		Option opcaoModoVerboso = new Option("v", "verbose", false,
 				"Habilita modo verboso.");
 		options.addOption(opcaoModoVerboso);
+		options.addOption(new Option("h", "help", false, "Imprimir esta lista de opções do programa."));
 		
 		CommandLineParser cmdParser = new DefaultParser();
 		HelpFormatter ajuda = new HelpFormatter();
@@ -64,9 +65,14 @@ public class Main {
 
 		try {
 			cmd = cmdParser.parse(options, args);
-		} catch (ParseException e) {
-			System.err.println(e.getMessage());
-			ajuda.printHelp("cotuba", options);
+			if (cmd.hasOption("help")) {
+                ajuda.printHelp("./cotuba.sh", options);
+                System.exit(1);
+                return;
+              }
+        } catch (ParseException e) {
+              System.err.println(e.getMessage());
+              ajuda.printHelp("./cotuba.sh", options);
 			System.exit(1);
 			return;
 		}
