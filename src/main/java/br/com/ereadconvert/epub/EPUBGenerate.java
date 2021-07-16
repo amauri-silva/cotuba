@@ -1,10 +1,10 @@
 package br.com.ereadconvert.epub;
 
-import java.nio.file.Path;
+import br.com.ereadconvert.domain.dto.Ebook;
 
 
 public interface EPUBGenerate {
 
-    void generate(EPUBGenerate epubGenerate);
+    void generate(Ebook epubGenerate);
 
 }

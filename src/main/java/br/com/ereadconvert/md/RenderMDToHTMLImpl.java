@@ -62,8 +62,7 @@ public class RenderMDToHTMLImpl implements RenderMDToHTML {
             return null;
             
         } catch (IOException ex) {
-            throw new RuntimeException("Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(),
-                ex);
+            throw new RuntimeException("Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(),  ex);
         }
     }
 }

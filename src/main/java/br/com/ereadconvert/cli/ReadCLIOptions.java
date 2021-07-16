@@ -12,6 +12,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.itextpdf.kernel.log.SystemOutCounter;
+
 public class ReadCLIOptions {
 
     // TODO colocar no MAIN
@@ -19,12 +21,20 @@ public class ReadCLIOptions {
     String formato;
     Path arquivoDeSaida;
     boolean modoVerboso = false;
+    CommandLine cmd;
+    String[] args;
 
-    public String MDDosDirectory(){
-        
+
+    public ReadCLIOptions(String[] args) {
+        this.args = args;
+    }
+
+
+    public Path getDosMDDiretory() {
+
         try {
             String nomeDoDiretorioDosMD = cmd.getOptionValue("dir");
-    
+
             if (nomeDoDiretorioDosMD != null) {
                 diretorioDosMD = Paths.get(nomeDoDiretorioDosMD);
                 if (!Files.isDirectory(diretorioDosMD)) {
@@ -34,12 +44,84 @@ public class ReadCLIOptions {
                 Path diretorioAtual = Paths.get("");
                 diretorioDosMD = diretorioAtual;
             }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return diretorioDosMD;
+    }
+
+
+    public String getFormat() {
+
+        try {
+            
+            String nomeDoFormatoDoEbook = cmd.getOptionValue("format");
+
+            if (nomeDoFormatoDoEbook != null) {
+                formato = nomeDoFormatoDoEbook.toLowerCase();
+            } else {
+                formato = "pdf";
+            }
+
+        } catch (Exception ex) {
+            System.err.println(ex);
         }
         
-        return null;
+        return formato;
     }
+
     
-    public void runCli(String[] args) {
+    
+    public Path getOutputFile() {
+
+        try {
+            String nomeDoArquivoDeSaidaDoEbook = cmd.getOptionValue("output");
+            
+            if (nomeDoArquivoDeSaidaDoEbook != null) {
+                arquivoDeSaida = Paths.get(nomeDoArquivoDeSaidaDoEbook);
+                
+                if (Files.exists(arquivoDeSaida) && Files.isDirectory(arquivoDeSaida)) {
+                    throw new RuntimeException(nomeDoArquivoDeSaidaDoEbook + " é um diretório.");
+                }
+            } else {
+                arquivoDeSaida = Paths.get("book." + formato.toLowerCase());
+            }
+
+            modoVerboso = cmd.hasOption("verbose");
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            if (modoVerboso) {
+                ex.printStackTrace();
+            }
+            System.exit(1);
+        }
+        return arquivoDeSaida;
+    }
+
+    
+    public Boolean isVerboseMode() {
+
+        try {
+            modoVerboso = cmd.hasOption("verbose");
+            if(modoVerboso)
+                return modoVerboso;
+            
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            if (modoVerboso) {
+                ex.printStackTrace();
+            }
+            System.exit(1);
+        }
+        return modoVerboso;
+    }
+
+
+    
+    //TODO verificar o que será feito com esse código
+    public void runCli() {
         Options options = new Options();
 
         Option opcaoDeDiretorioDosMD = new Option("d", "dir", true,
@@ -63,7 +145,7 @@ public class ReadCLIOptions {
         CommandLine cmd;
 
         try {
-            cmd = cmdParser.parse(options, args);
+            cmd = cmdParser.parse(options, this.args);
             if (cmd.hasOption("help")) {
                 ajuda.printHelp("./cotuba.sh", options);
                 System.exit(1);
@@ -75,39 +157,5 @@ public class ReadCLIOptions {
             System.exit(1);
             return;
         }
-
-
-
-
-            
-            String nomeDoFormatoDoEbook = cmd.getOptionValue("format");
-    
-            if (nomeDoFormatoDoEbook != null) {
-                formato = nomeDoFormatoDoEbook.toLowerCase();
-            } else {
-                formato = "pdf";
-            }
-    
-            String nomeDoArquivoDeSaidaDoEbook = cmd.getOptionValue("output");
-            if (nomeDoArquivoDeSaidaDoEbook != null) {
-                arquivoDeSaida = Paths.get(nomeDoArquivoDeSaidaDoEbook);
-                if (Files.exists(arquivoDeSaida) && Files.isDirectory(arquivoDeSaida)) {
-                    throw new RuntimeException(nomeDoArquivoDeSaidaDoEbook + " é um diretório.");
-                }
-            } else {
-                arquivoDeSaida = Paths.get("book." + formato.toLowerCase());
-            }
-
-            modoVerboso = cmd.hasOption("verbose");
-            
-        }catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            if (modoVerboso) {
-                ex.printStackTrace();
-            }
-            System.exit(1);
-        }
-        
-
     }
 }

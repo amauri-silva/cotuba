@@ -27,7 +27,7 @@ public class Cotuba {
             pdfGenerate.generate(ebook);
         } else if ("epub".equals(format)) {
             EPUBGenerate epubGenerate = new EPUBGenerateImpl();
-            epubGenerate.generate(epubGenerate);
+            epubGenerate.generate(ebook);
         } else {
             throw new RuntimeException("Formato do ebook inválido: " + format);
         }
